@@ -1,10 +1,19 @@
-#
-# from device/samsung/a9y18qlte/system.prop
-#
-# read DS/SS property
-import /efs/factory.prop
-ro.multisim.simslotcount=2
-#Netflix custom property
+# Audio
+ro.bluetooth.a2dp_offload.supported=false
+persist.bluetooth.a2dp_offload.disabled=true
+vendor.audio.feature.a2dp_offload.enable=false
+
+# Bluetooth
+vendor.bluetooth.soc=cherokee
+#ro.bluetooth.library_name=libbluetooth_qti.so
+persist.vendor.btstack.enable.splita2dp=true
+persist.vendor.btstack.a2dp_offload_cap=sbc-aptx-aptxhd-aac
+
+# CNE
+persist.vendor.cne.feature=1
+
+# Netflix custom property
 ro.netflix.bsp_rev=Q660-13149-1
 
-#
+# Qualcomm
+ro.vendor.qti.va_aosp.support=1

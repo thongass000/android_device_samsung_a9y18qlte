@@ -24,8 +24,13 @@ vendor/lib/rfsa/adsp/libapps_mem_heap.so
 vendor/lib/rfsa/adsp/libdspCV_skel.so
 vendor/lib/rfsa/adsp/libfastcvadsp.so
 vendor/lib/rfsa/adsp/libfastcvadsp_skel.so
+vendor/lib/rfsa/adsp/libFastRPC_AUE_Forward_skel.so
+vendor/lib/rfsa/adsp/libFastRPC_UTF_Forward_800h_skel.so
+vendor/lib/rfsa/adsp/libFastRPC_UTF_Forward_Qtc2_skel.so
+vendor/lib/rfsa/adsp/libscveBlobDescriptor_skel.so
+vendor/lib/rfsa/adsp/libscveObjectSegmentation_skel.so
+vendor/lib/rfsa/adsp/libscveT2T_skel.so
 vendor/lib/rfsa/adsp/libsns_low_lat_stream_skel.so
-vendor/lib/rfsa/adsp/libvpp_svc_skel.so
 
 # ANT
 lib/com.qualcomm.qti.ant@1.0.so
@@ -36,12 +41,6 @@ vendor/lib/com.qualcomm.qti.ant@1.0.so
 vendor/lib/hw/com.qualcomm.qti.ant@1.0-impl.so
 vendor/lib64/com.qualcomm.qti.ant@1.0.so
 vendor/lib64/hw/com.qualcomm.qti.ant@1.0-impl.so
-
-# Alarm
-vendor/lib/libalarmservice_jni.so
-vendor/lib/vendor.qti.hardware.alarm@1.0.so
-vendor/lib64/libalarmservice_jni.so
-vendor/lib64/vendor.qti.hardware.alarm@1.0.so
 
 # Audio
 etc/permissions/audiosphere.xml
@@ -60,13 +59,6 @@ vendor/lib/libaudio_soundtrigger.so
 vendor/lib/libdrc.so
 vendor/lib/libqtigef.so
 vendor/lib/libsurround_3mic_proc.so
-vendor/lib/soundfx/libasphere.so
-vendor/lib/soundfx/libaudioeffectoffload.so
-vendor/lib/soundfx/libaudiopreprocessing.so
-vendor/lib/soundfx/libaudiosaplus_sec.so
-vendor/lib/soundfx/libqcbassboost.so
-vendor/lib/soundfx/libqcreverb.so
-vendor/lib/soundfx/libqcvirt.so
 vendor/lib64/libacdb-fts.so
 vendor/lib64/libacdbloader.so
 vendor/lib64/libacdbrtac.so
@@ -75,10 +67,29 @@ vendor/lib64/libaudcal.so
 vendor/lib64/libaudioalsa.so
 vendor/lib64/libaudioparsers.so
 vendor/lib64/libqtigef.so
+
+vendor/etc/audio_configs.xml
+vendor/etc/audio_effects_sec.xml
+vendor/etc/audio_policy_configuration_sec.xml
+vendor/etc/audio_policy_volumes_sec.xml
+vendor/etc/sound_trigger_mixer_paths_wcd9330.xml
+vendor/etc/sound_trigger_mixer_paths_wcd9335.xml
+vendor/etc/sound_trigger_mixer_paths_wcd9340.xml
+
+
+# Audio FX Modules
+vendor/lib/soundfx/libasphere.so
+vendor/lib/soundfx/libaudioeffectoffload.so
+vendor/lib/soundfx/libaudiopreprocessing.so
+vendor/lib/soundfx/libaudiosaplus_sec.so
+vendor/lib/soundfx/libqcbassboost.so
+vendor/lib/soundfx/libqcreverb.so
+vendor/lib/soundfx/libqcvirt.so
 vendor/lib64/soundfx/libasphere.so
 vendor/lib64/soundfx/libaudioeffectoffload.so
 vendor/lib64/soundfx/libaudiopreprocessing.so
 vendor/lib64/soundfx/libqcbassboost.so
+vendor/lib64/soundfx/libqcreverb.so
 vendor/lib64/soundfx/libqcvirt.so
 
 # Audio-ACDB
@@ -126,10 +137,9 @@ vendor/lib64/soundfx/libqcomvoiceprocessing.so
 vendor/lib64/soundfx/libvolumelistener.so
 
 # Bluetooth
-vendor/bin/btnvtool
 vendor/bin/hci_qcomm_init
-vendor/bin/hw/android.hardware.bluetooth@1.0-service-qti
 vendor/bin/wcnss_filter
+vendor/bin/hw/android.hardware.bluetooth@1.0-service-qti
 vendor/etc/init/android.hardware.bluetooth@1.0-service-qti.rc
 vendor/lib/com.qualcomm.qti.bluetooth_audio@1.0.so
 vendor/lib/hw/android.hardware.bluetooth@1.0-impl-qti.so
@@ -138,7 +148,6 @@ vendor/lib/vendor.samsung.hardware.bluetooth@1.0.so
 vendor/lib64/com.qualcomm.qti.bluetooth_audio@1.0.so
 vendor/lib64/hw/android.hardware.bluetooth@1.0-impl-qti.so
 vendor/lib64/libbt-hidlclient.so
-vendor/lib64/libbtnv.so
 vendor/lib64/vendor.samsung.hardware.bluetooth@1.0.so
 
 # Bluetooth-AptX
@@ -1049,6 +1058,16 @@ vendor/lib64/libvpphvx.so
 vendor/lib64/libvpplibrary.so
 vendor/lib64/libvpptestutils.so
 
+# Media Codecs
+vendor/etc/media_codecs_ac4.xml
+vendor/etc/media_codecs_ddp.xml
+vendor/etc/media_codecs_dolby_audio.xml
+vendor/etc/media_codecs_sec_ape.xml
+vendor/etc/media_codecs_sec_primary.xml
+vendor/etc/media_codecs_sec_qcp.xml
+vendor/etc/media_codecs_sec_secondary.xml
+vendor/etc/media_codecs_sec_video_primary.xml
+
 # Media-Hardware
 vendor/lib/libc2dcolorconvert.so
 vendor/lib/libmm-omxcore.so
@@ -1077,8 +1096,8 @@ vendor/lib64/libstagefrighthw.so
 etc/nfcee_access.xml
 vendor/bin/hw/nxp.android.hardware.nfc@1.1-service
 vendor/etc/init/nxp.android.hardware.nfc@1.1-service.rc
-vendor/etc/libnfc-nci.conf
-vendor/etc/libnfc-nxp.conf
+-vendor/etc/libnfc-nci.conf
+-vendor/etc/libnfc-nxp.conf
 vendor/etc/nfc/libnfc-nxp_RF.conf
 vendor/etc/permissions/com.android.nfc_extras.xml
 vendor/etc/permissions/com.nxp.mifare.xml
@@ -1117,14 +1136,6 @@ vendor/lib/libperipheral_client.so
 vendor/lib64/libperipheral_client.so
 
 # Postprocessing
-lib/vendor.display.color@1.0.so
-lib/vendor.display.color@1.1.so
-lib/vendor.display.color@1.2.so
-lib/vendor.display.postproc@1.0.so
-lib64/vendor.display.color@1.0.so
-lib64/vendor.display.color@1.1.so
-lib64/vendor.display.color@1.2.so
-lib64/vendor.display.postproc@1.0.so
 vendor/bin/hw/vendor.display.color@1.0-service
 vendor/etc/init/vendor.display.color@1.0-service.rc
 vendor/lib/libdisp-aba.so
@@ -1187,9 +1198,9 @@ vendor/lib64/vendor.qti.hardware.qdutils_disp@1.0.so
 # Radio
 -app/embms/embms.apk
 etc/permissions/embms.xml
-etc/permissions/privapp-permissions-qti.xml
+-etc/permissions/privapp-permissions-qti.xml
 etc/permissions/qcrilhook.xml
-etc/sysconfig/qti_whitelist.xml
+-etc/sysconfig/qti_whitelist.xml
 framework/embmslibrary.jar
 framework/qcrilhook.jar
 vendor/bin/ATFWD-daemon
@@ -1407,8 +1418,6 @@ vendor/lib64/hw/thermal.sdm660.so
 -vendor/lib64/libthermalclient.so
 vendor/lib64/libthermalioctl.so
 
-# Thermal-Hardware
-
 # Time
 -vendor/app/TimeService/TimeService.apk
 vendor/bin/time_daemon
@@ -1494,16 +1503,6 @@ vendor/bin/test_diag
 vendor/bin/test_module_pproc
 vendor/bin/vendor_cmd_tool
 vendor/bin/wvkprov
-vendor/etc/carrier/ACG/permissions/android.hardware.telephony.cdma.xml
-vendor/etc/carrier/BST/permissions/android.hardware.telephony.cdma.xml
-vendor/etc/carrier/CCT/permissions/android.hardware.telephony.cdma.xml
-vendor/etc/carrier/LRA/permissions/android.hardware.telephony.cdma.xml
-vendor/etc/carrier/SPR/permissions/android.hardware.telephony.cdma.xml
-vendor/etc/carrier/TFN/permissions/android.hardware.telephony.cdma.xml
-vendor/etc/carrier/USC/permissions/android.hardware.telephony.cdma.xml
-vendor/etc/carrier/VMU/permissions/android.hardware.telephony.cdma.xml
-vendor/etc/carrier/VZW/permissions/android.hardware.telephony.cdma.xml
-vendor/etc/carrier/XAS/permissions/android.hardware.telephony.cdma.xml
 vendor/etc/gpfspath_oem_config.xml
 vendor/etc/init/init.vendor.rilchip.rc
 vendor/etc/init/init.vendor.rilcommon.rc
@@ -1527,8 +1526,7 @@ vendor/etc/snap_gpu_kernel_32.bin
 vendor/etc/snap_gpu_kernel_64.bin
 vendor/etc/somxreg.conf
 vendor/etc/SoundBoosterParam.txt
-vendor/etc/tms_audio_policy_configuration.xml
-vendor/etc/wlan_common_rc
+zvendor/etc/wlan_common_rc
 vendor/etc/wlan_vendor_rc
 vendor/lib/libarac.so
 vendor/lib/libarchdr_interface.so

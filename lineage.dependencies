@@ -1,0 +1,16 @@
+[
+    {
+        "repository": "LineageOS/android_hardware_samsung",
+        "target_path": "hardware/samsung",
+		"remote":"github",
+		"revision":"lineage-18.1"
+	},
+	{
+		"repository": "kernel_samsung_a9y18qlte",
+		"target_path": "kernel/samsung/a9y18qlte"
+	},
+	{
+		"repository": "vendor_samsung_a9y18qlte",
+		"target_path": "vendor/samsung/a9y18qlte"
+	}
+]

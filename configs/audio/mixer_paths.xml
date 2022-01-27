@@ -144,6 +144,8 @@
     <ctl name="MultiMedia6 Mixer INT3_MI2S_TX" value="0" />
     <ctl name="INT0_MI2S_RX Channels" value="One" />
     <ctl name="INT3_MI2S_TX Channels" value="One" />
+    <ctl name="TERT_MI2S_RX Channels" value="Two" />
+    <ctl name="TERT_MI2S_TX Channels" value="Two" />
     <ctl name="I2S TX2 INP1" value="ZERO" />
     <ctl name="I2S TX2 INP2" value="ZERO" />
     <ctl name="TERT_MI2S_RX Audio Mixer MultiMedia4" value="0" />
@@ -1700,6 +1702,11 @@
         <ctl name="Voip_Tx Mixer USB_AUDIO_TX_Voip" value="1" />
     </path>
 
+    <path name="voip-call hearing-aid">
+        <ctl name="AFE_PCM_RX_Voice Mixer Voip" value="1" />
+        <ctl name="Voip_Tx Mixer INT3_MI2S_TX_Voip" value="1" />
+    </path>
+
     <path name="voicemmode1-call">
         <ctl name="INT0_MI2S_RX_Voice Mixer VoiceMMode1" value="1" />
         <ctl name="VoiceMMode1_Tx Mixer INT3_MI2S_TX_MMode1" value="1" />
@@ -1745,6 +1752,11 @@
         <ctl name="VoiceMMode1_Tx Mixer INT3_MI2S_TX_MMode1" value="1" />
     </path>
 
+    <path name="voicemmode1-call hearing-aid">
+        <ctl name="AFE_PCM_RX_Voice Mixer VoiceMMode1" value="1" />
+        <ctl name="VoiceMMode1_Tx Mixer INT3_MI2S_TX_MMode1" value="1" />
+    </path>
+
     <path name="voicemmode2-call">
         <ctl name="INT0_MI2S_RX_Voice Mixer VoiceMMode2" value="1" />
         <ctl name="VoiceMMode2_Tx Mixer INT3_MI2S_TX_MMode2" value="1" />
@@ -1785,6 +1797,10 @@
         <ctl name="VoiceMMode2_Tx Mixer USB_AUDIO_TX_MMode2" value="1" />
     </path>
 
+    <path name="voicemmode2-call hearing-aid">
+        <ctl name="AFE_PCM_RX_Voice Mixer VoiceMMode2" value="1" />
+        <ctl name="VoiceMMode2_Tx Mixer INT3_MI2S_TX_MMode2" value="1" />
+    </path>
 
     <path name="voicemmode2-call speaker">
         <ctl name="TERT_MI2S_RX_Voice Mixer VoiceMMode2" value="1" />
@@ -1870,7 +1886,7 @@
 
     <!-- TX part -->
     <path name="main-mic">
-        <ctl name="DEC1 MUX" value="DMIC1" />
+        <ctl name="DEC1 MUX" value="DMIC2" />
     </path>
 
     <path name="sub-mic">
@@ -1884,19 +1900,19 @@
 
     <path name="main-sub-mic">
         <ctl name="INT3_MI2S_TX Channels" value="Two" />
-        <ctl name="DEC1 MUX" value="DMIC1" />
+        <ctl name="DEC1 MUX" value="DMIC2" />
         <ctl name="DEC2 MUX" value="DMIC3" />
     </path>
 
     <path name="sub-main-mic">
         <ctl name="INT3_MI2S_TX Channels" value="Two" />
-        <ctl name="DEC2 MUX" value="DMIC1" />
+        <ctl name="DEC2 MUX" value="DMIC2" />
         <ctl name="DEC1 MUX" value="DMIC3" />
     </path>
 
     <path name="ear-main-mic">
         <ctl name="INT3_MI2S_TX Channels" value="Two" />
-        <ctl name="DEC1 MUX" value="DMIC1" />
+        <ctl name="DEC1 MUX" value="DMIC2" />
         <ctl name="DEC2 MUX" value="ADC2" />
         <ctl name="ADC2 MUX" value="INP2" />
     </path>
@@ -2253,6 +2269,12 @@
     </path>
 
     <!-- TX part -->
+    <path name="hearing-aid-mic">
+        <path name="main-sub-mic" />
+        <ctl name="DEC1 Volume" value="84" />
+        <ctl name="DEC2 Volume" value="84" />
+    </path>
+
     <path name="call-handset-mic">
         <path name="main-sub-mic" />
         <ctl name="DEC1 Volume" value="84" />

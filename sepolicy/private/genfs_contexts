@@ -1,0 +1,24 @@
+# Lights
+genfscon sysfs /devices/virtual/sec/led                              u:object_r:sysfs_leds:s0
+genfscon sysfs /class/backlight/panel0-backlight/brightness          u:object_r:sysfs_leds:s0
+genfscon sysfs /class/backlight/panel0-backlight/max_brightness      u:object_r:sysfs_leds:s0
+
+# Health
+        # Note 9
+genfscon sysfs /devices/platform/soc/a98000.i2c/i2c-32/32-0066/max77705-fuelgauge u:object_r:sysfs_health:s0
+genfscon sysfs /devices/platform/soc/a98000.i2c/i2c-32/32-0066/max77705-charger   u:object_r:sysfs_health:s0
+
+        # S9/S9+
+genfscon sysfs /devices/platform/soc/a98000.i2c/i2c-31/31-0066/max77705-fuelgauge u:object_r:sysfs_health:s0
+genfscon sysfs /devices/platform/soc/a98000.i2c/i2c-31/31-0066/max77705-charger   u:object_r:sysfs_health:s0
+genfscon sysfs /devices/platform/soc/soc:i2c@14/i2c-27/27-003b/power_supply/mfc-charger   u:object_r:sysfs_health:s0
+
+# Sec Key
+genfscon sysfs /devices/virtual/sec/sec_key                                       u:object_r:sysfs_sec_key:s0
+
+# RTC
+genfscon sysfs /devices/platform/141c0000.speedy/i2c-15/15-0000/s2mps18-rtc/rtc   u:object_r:sysfs_rtc:s0
+
+# Touch
+genfscon sysfs /devices/virtual/sec/tsp     u:object_r:sysfs_sec_tsp:s0
+

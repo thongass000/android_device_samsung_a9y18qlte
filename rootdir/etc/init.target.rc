@@ -26,11 +26,18 @@
 # IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 #
+import /vendor/etc/init/hw/init.samsung.rc
+import /vendor/etc/init/hw/init.${ro.product.device}.rc
+import /vendor/etc/init/hw/init.${ro.product.model}.rc
 
 on early-init
-    symlink /data/tombstones /tombstones
+	symlink /data/tombstones /tombstones
     mkdir /efs 0771 system radio
     mkdir /mnt/vendor/persist 0771 system system
+
+    mkdir /firmware 0771 system system
+    mkdir /bt_firmware 0771 system system
+    mkdir /dsp 0771 media media
 
 on init
     write /dev/stune/foreground/schedtune.sched_boost_no_override 1
@@ -60,14 +67,14 @@ on fs
     mkdir /mnt/vendor/persist/bms 0700 root system
     restorecon_recursive /mnt/vendor/persist
     write /sys/kernel/boot_adsp/boot 1
-
-    wait /dev/block/bootdevice/by-name/cache
+	
+	wait /dev/block/bootdevice/by-name/cache
     mount ext4 /dev/block/bootdevice/by-name/cache /cache nosuid nodev noatime noauto_da_alloc,discard,journal_checksum,data=ordered,errors=panic
 
     wait /dev/block/bootdevice/by-name/persist
     mount ext4 /dev/block/bootdevice/by-name/persist /mnt/vendor/persist nosuid nodev noatime noauto_da_alloc,discard,journal_checksum,data=ordered,errors=panic
     restorecon_recursive /mnt/vendor/persist
-    mkdir /mnt/vendor/persist/rfs 0700 system system
+	mkdir /mnt/vendor/persist/rfs 0700 system system
 
     wait /dev/block/bootdevice/by-name/dsp
     mount ext4 /dev/block/bootdevice/by-name/dsp /vendor/dsp nosuid nodev barrier=1
@@ -75,16 +82,24 @@ on fs
     mount ext4 /dev/block/bootdevice/by-name/dsp /vendor/dsp ro remount nosuid nodev barrier=1
 
     wait /dev/block/bootdevice/by-name/efs
-    mount ext4 /dev/block/bootdevice/by-name/efs /efs nosuid nodev noatime noauto_da_alloc,discard,journal_checksum,data=ordered,errors=panic
+    mkdir /mnt/vendor/efs
+    mount ext4 /dev/block/bootdevice/by-name/efs /mnt/vendor/efs nosuid nodev noatime noauto_da_alloc,discard,journal_checksum,data=ordered,errors=panic
+    mount none /mnt/vendor/efs /efs bind
     chown system radio /efs
     chmod 0771 /efs
     restorecon -R /efs
 
+#    wait /dev/block/bootdevice/by-name/sec_efs
+#    mount ext4 /dev/block/bootdevice/by-name/sec_efs /efs nosuid nodev noatime noauto_da_alloc,discard,journal_checksum,data=ordered,errors=panic
+#    restorecon -R /efs
+
     wait /dev/block/bootdevice/by-name/apnhlos
     mount vfat /dev/block/bootdevice/by-name/apnhlos /vendor/firmware_mnt ro context=u:object_r:firmware_file:s0,shortname=lower,uid=0,gid=1000,dmask=227,fmask=337
 
-    wait /dev/block/bootdevice/by-name/modem
+   wait /dev/block/bootdevice/by-name/modem
     mount vfat /dev/block/bootdevice/by-name/modem /vendor/firmware-modem ro context=u:object_r:firmware_file:s0,shortname=lower,uid=0,gid=1000,dmask=227,fmask=337
+	
+	
 
 on post-fs
     start vendor.qseecomd
@@ -99,40 +114,8 @@ on post-fs-data
     mkdir /data/tombstones/lpass 0771 system system
     mkdir /data/tombstones/wcnss 0771 system system
     mkdir /data/tombstones/dsps 0771 system system
-    mkdir /data/vendor/hbtp 0750 system system
+    # mkdir /data/vendor/hbtp 0750 system system
     mkdir /data/misc/seemp 0700 system system
-    mkdir /data/vendor/tloc 0700 system drmrpc
-
-    # for WIFI MAC address
-    mkdir /efs/wifi 0775 wifi root
-    chown wifi root /efs/wifi/.mac.info
-    chmod 0664 /efs/wifi/.mac.info
-    chown wifi root /efs/wifi/.mac.cob
-    chmod 0664 /efs/wifi/.mac.cob
-
-    # Permissions for NXP AMP calibration
-    chown system audio /sys/class/nxp/tfa_cal/status
-    chown system audio /sys/class/nxp/tfa_cal/rdc
-    chown system audio /sys/class/nxp/tfa_cal/temp
-    mkdir /efs/nxp 0770 audioserver audio
-    chown audioserver audio /efs/nxp/temp_cal
-    chown audioserver audio /efs/nxp/rdc_cal
-
-    # Permissions for NXP AMP bigdata
-    chown system audio /sys/class/nxp/tfa_log/data_maxx
-    chown system audio /sys/class/nxp/tfa_log/count_overxmax
-    chown system audio /sys/class/nxp/tfa_log/data_maxt
-    chown system audio /sys/class/nxp/tfa_log/count_overtmax
-    chmod 0440 /sys/class/nxp/tfa_log/data_maxx
-    chmod 0440 /sys/class/nxp/tfa_log/count_overxmax
-    chmod 0440 /sys/class/nxp/tfa_log/data_maxt
-    chmod 0440 /sys/class/nxp/tfa_log/count_overtmax
-
-    # DBMDx
-    chmod 0660 /dev/dbmdx-1
-    chown system audio /dev/dbmdx-1
-    mkdir /data/firmware 0770 audioserver system
-    chown audioserver system /data/firmware
 
 on boot
     start rmt_storage
@@ -164,13 +147,14 @@ on boot
     mkdir /data/vendor/camera 0770 camera camera
 
 #Load WLAN driver
-   insmod /vendor/lib/modules/qca_cld3/qca_cld3_wlan.ko
+#   insmod /vendor/lib/modules/qca_cld3/qca_cld3_wlan.ko
 
 #USB controller configuration
     setprop vendor.usb.rndis.func.name "rndis_bam"
     setprop vendor.usb.rmnet.func.name "rmnet_bam"
     setprop vendor.usb.rmnet.inst.name "rmnet"
     setprop vendor.usb.dpl.inst.name "dpl"
+    setprop vendor.usb.qdss.inst.name "qdss"
     write /sys/module/usb_f_qcrndis/parameters/rndis_dl_max_xfer_size 15916
     setprop sys.usb.configfs 1
 
@@ -230,10 +214,6 @@ service vendor.qseecomd /vendor/bin/qseecomd
    user root
    group root
 
-#service mpdecision /system/vendor/bin/mpdecision --avg_comp
-#   user root
-#   disabled
-#
 #service qosmgrd /system/bin/qosmgr /system/etc/qosmgr_rules.xml
 #   user system
 #   group system
@@ -256,10 +236,6 @@ service thermal-engine /system/vendor/bin/thermal-engine
 #    class core
 #    oneshot
 #
-service time_daemon /system/vendor/bin/time_daemon
-   class late_start
-   user root
-   group root
 
 service adsprpcd_root /vendor/bin/adsprpcd
    class main
@@ -271,11 +247,11 @@ service adsprpcd /vendor/bin/adsprpcd audiopd
    user media
    group media
 
-service hbtp /system/vendor/bin/hbtp_daemon
-    class main
-    user system
-    group system
-    disabled
+#service hbtp /system/vendor/bin/hbtp_daemon
+#    class main
+#    user system
+#    group system
+#    disabled
 
 service audiod /system/vendor/bin/audiod
    class late_start
@@ -352,19 +328,19 @@ service vendor.cdsprpcd /vendor/bin/cdsprpcd
 #
 #
 ## imsdatadaemon starts with root and UID will be downgraded to SYSTEM.
-#service vendor.imsqmidaemon /system/vendor/bin/imsqmidaemon
-#    class main
-#    user system
-#    socket ims_qmid stream 0660 system radio
-#    group radio log diag
+service vendor.imsqmidaemon /system/vendor/bin/imsqmidaemon
+    class main
+    user system
+    socket ims_qmid stream 0660 system radio
+    group radio log diag
 
 # imsdatadaemon starts with root and UID will be downgraded to SYSTEM.
-#service vendor.imsdatadaemon /system/vendor/bin/imsdatadaemon
-#    class main
-#    user system
-#    socket ims_datad stream 0660 system radio
-#    group system wifi radio inet log diag
-#    disabled
+service vendor.imsdatadaemon /system/vendor/bin/imsdatadaemon
+    class main
+    user system
+    socket ims_datad stream 0660 system radio
+    group system wifi radio inet log diag
+    disabled
 #
 #service mdm_helper /system/bin/mdm_helper
 #    class core
@@ -419,9 +395,9 @@ service mdtpd /system/vendor/bin/mdtpd
     group system radio drmrpc
 
 service vendor.pd_mapper /system/vendor/bin/pd-mapper
-    class core
-    user system
-    group system
+     class core
+     user system
+     group system
 
 #
 ## QCA1530 SoC late_start group trigger
@@ -436,8 +412,8 @@ service vendor.pd_mapper /system/vendor/bin/pd-mapper
 #   group gps system qcom_diag diag log inet net_raw
 #   disabled
 
-#on property:vendor.ims.QMI_DAEMON_STATUS=1
-#    start vendor.imsdatadaemon
+on property:vendor.ims.QMI_DAEMON_STATUS=1
+    start vendor.imsdatadaemon
 
 on property:vold.decrypt=trigger_restart_framework
    start cnss_diag
@@ -448,18 +424,18 @@ service cnss_diag /system/vendor/bin/cnss_diag -q -f -t HELIUM
    group system wifi inet sdcard_rw media_rw diag
    oneshot
 
-#service vendor.ims_rtp_daemon /system/vendor/bin/ims_rtp_daemon
-#   class main
-#   user system
-#   group radio diag inet log
+service vendor.ims_rtp_daemon /system/vendor/bin/ims_rtp_daemon
+   class main
+   user system
+   group radio diag inet log
 
-#service vendor.imsrcsservice /system/vendor/bin/imsrcsd
-#   class main
-#   user system
-#   group radio diag inet log wakelock
+service vendor.imsrcsservice /system/vendor/bin/imsrcsd
+   class main
+   user system
+   group radio diag inet log wakelock
 
-#on property:vendor.ims.DATA_DAEMON_STATUS=1
-#    restart vendor.ims_rtp_daemon
+on property:vendor.ims.DATA_DAEMON_STATUS=1
+    restart vendor.ims_rtp_daemon
 
 
 service ppd /system/vendor/bin/mm-pp-dpps
@@ -490,6 +466,7 @@ on property:init.svc.zygote=restarting
 on charger
     load_system_props
     start qcom-post-boot
+    start vendor.hvdcp_opti
     setprop sys.usb.configfs 1
     start power_off_alarm
 
@@ -518,14 +495,9 @@ service seempd /system/bin/seempd
     group system sdcard_rw
     socket seempdw dgram 0666 system system
 
-service vendor.tlocd /vendor/bin/tloc_daemon
-    class late_start
-    user system
-    group drmrpc gps net_raw
+service vendor.hvdcp_opti /system/vendor/bin/hvdcp_opti
+     class main
+     user root
+     group system wakelock
 
-
-service smcinvoked /system/bin/smcinvoked
-   class main
-   user system
-   group system
 

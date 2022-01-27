@@ -1,6 +1,3 @@
-on init
-    mkdir /preload 0771 system system
-
 on boot
 # SSWAP
     write /proc/sys/vm/swappiness 130
@@ -56,12 +53,6 @@ service faced /system/bin/faced
     group system
 
 on post-fs
-    # Permissions for NFC,eSE
-    chmod 0660 /dev/pn547
-    chmod 0660 /dev/p61
-    chown nfc nfc /dev/pn547
-    chown system system /dev/p61
-
     # Permissions for NXP AMP calibration
     chown system audio /sys/class/nxp/tfa_cal/status
     chown system audio /sys/class/nxp/tfa_cal/rdc
@@ -127,6 +118,31 @@ on post-fs-data
 # MST/NFC Switch
     chown spay system /dev/mst_ctrl
     chmod 0660 /dev/mst_ctrl    
+
+# setup cgroup freezer for freecess
+    mkdir /dev/freezer
+    mount cgroup none /dev/freezer freezer
+    mkdir /dev/freezer/frozen
+    mkdir /dev/freezer/thaw
+    write /dev/freezer/frozen/freezer.state FROZEN
+    write /dev/freezer/thaw/freezer.state THAWED
+
+# MARs for freecess
+    chown system system /dev/freezer
+    chown system system /dev/freezer/frozen
+    chown system system /dev/freezer/frozen/tasks
+    chown system system /dev/freezer/frozen/cgroup.procs
+    chown system system /dev/freezer/frozen/freezer.state
+    chown system system /dev/freezer/thaw
+    chown system system /dev/freezer/thaw/tasks
+    chown system system /dev/freezer/thaw/cgroup.procs
+
+# MARs for freecess
+    chmod 0644 /dev/freezer/frozen/tasks
+    chmod 0644 /dev/freezer/frozen/cgroup.procs
+    chmod 0644 /dev/freezer/frozen/freezer.state
+    chmod 0644 /dev/freezer/thaw/tasks
+    chmod 0644 /dev/freezer/thaw/cgroup.procs
 
 # umount service
 service umount_service /system/bin/umount /preload
