@@ -1,16 +1,20 @@
 [
-    {
-        "repository": "LineageOS/android_hardware_samsung",
-        "target_path": "hardware/samsung",
+	{
+		"repository": "LineageOS/android_hardware_samsung",
+		"target_path": "hardware/samsung",
 		"remote":"github",
-		"revision":"lineage-18.1"
+		"revision":"lineage-17.1"
 	},
 	{
-		"repository": "kernel_samsung_a9y18qlte",
-		"target_path": "kernel/samsung/a9y18qlte"
+		"repository": "thongass000/android_kernel_samsung_a9y18qlte",
+		"target_path": "kernel/samsung/a9y18qlte",
+		"remote":"github",
+		"revision":"master"
 	},
 	{
-		"repository": "vendor_samsung_a9y18qlte",
-		"target_path": "vendor/samsung/a9y18qlte"
+		"repository": "thongass000/android_vendor_samsung_a9y18qlte",
+		"target_path": "vendor/samsung/a9y18qlte",
+		"remote":"github",
+		"revision":"lineage-17.1"
 	}
 ]
