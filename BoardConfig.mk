@@ -86,7 +86,7 @@ BOARD_KERNEL_PAGESIZE := 4096
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset $(BOARD_RAMDISK_OFFSET) --tags_offset $(BOARD_TAGS_OFFSET)
 
 # Kernel config
-TARGET_KERNEL_CONFIG := sdm660_a9y18qlte_defconfig
+TARGET_KERNEL_CONFIG := a9y18qlte_defconfig
 TARGET_KERNEL_SOURCE := kernel/samsung/a9y18qlte
 KERNEL_TOOLCHAIN := $(BUILD_TOP)/prebuilts/gcc/$(HOST_OS)-x86/aarch64/aarch64-linux-android-4.9/bin
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
