@@ -90,6 +90,7 @@ TARGET_KERNEL_CONFIG := a9y18qlte_defconfig
 TARGET_KERNEL_SOURCE := kernel/samsung/a9y18qlte
 KERNEL_TOOLCHAIN := $(BUILD_TOP)/prebuilts/gcc/$(HOST_OS)-x86/aarch64/aarch64-linux-android-4.9/bin
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
+TARGET_KERNEL_CLANG_COMPILE := false
 
 # Partitions
 BOARD_BUILD_SYSTEM_ROOT_IMAGE := true
