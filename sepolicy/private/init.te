@@ -1,0 +1,13 @@
+allow init proc_abi:file getattr;
+allow init proc_dirty:file getattr;
+allow init proc_extra_free_kbytes:file getattr;
+allow init proc_hostname:file getattr;
+allow init proc_hung_task:file getattr;
+allow init proc_panic:file getattr;
+allow init proc_sched:file getattr;
+allow init proc_sysrq:file getattr;
+
+# Allow init to mount vendor configs
+allow init vendor_configs_file:file mounton;
+allow init vendor_configs_file:dir mounton;
+allow init runtime_event_log_tags_file:file getattr;
